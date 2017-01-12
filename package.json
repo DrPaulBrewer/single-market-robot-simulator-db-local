@@ -1,7 +1,7 @@
 {
   "name": "single-market-robot-simulator-db-local",
   "version": "0.1.0",
-  "description": "",
+  "description": "local storage adapter for use as DB with single-market-robot-simulator-app-framework"",
   "main": "build/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/drpaulbrewer/single-market-robot-simulator-db-webdismay"
+    "url": "https://github.com/drpaulbrewer/single-market-robot-simulator-db-local"
   },
   "devDependencies": {
     "babel": "^6.5.2",
