@@ -3,7 +3,7 @@
 
 /* global window:True */ 
 
-import {deepEqual} from "deep-equal";
+import deepEqual from "deep-equal";
 
 export function openList(name, defaultValue=[]){
     if ( (defaultValue) && (!(window.localStorage.getItem(name))) ){

@@ -13,6 +13,10 @@ exports.promiseMoveItem = promiseMoveItem;
 
 var _deepEqual = require("deep-equal");
 
+var _deepEqual2 = _interopRequireDefault(_deepEqual);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function openList(name) {
     var defaultValue = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
 
@@ -56,7 +60,7 @@ function promiseSaveItem(item, list) {
 function promiseRemoveItem(item, list) {
     return promiseList(list).then(function (data) {
         var newData = data.filter(function (x) {
-            return !(0, _deepEqual.deepEqual)(x, item, true);
+            return !(0, _deepEqual2.default)(x, item, true);
         });
         window.localStorage.setItem(list, JSON.stringify(newData));
     });
