@@ -1,13 +1,22 @@
 /* Copyright 2017 Paul Brewer, Economic and Financial Technology Consulting LLC */
 /* This file is open source software.  The MIT License applies to this software. */
 
-/* global window:True */ 
+/*
+ * store should be set to window.localStorage or window.sessionStorage with init(_)
+ *
+ */
+
+let store = null;  
 
 import deepEqual from "deep-equal";
 
+export function init(obj){
+    store = obj;
+}
+
 export function openList(name, defaultValue=[]){
-    if ( (defaultValue) && (!(window.localStorage.getItem(name))) ){
-        window.localStorage.setItem(name, JSON.stringify(defaultValue));
+    if ( (defaultValue) && (!(store.getItem(name))) ){
+        store.setItem(name, JSON.stringify(defaultValue));
     }
     return name;        
 }
@@ -18,12 +27,12 @@ export function promiseUpload(){
 
 export function promiseList(list){
     return new Promise(function(resolve, reject){
-        const S = window.localStorage;
+        const S = store;
         const data = S.getItem(list);
         setTimeout(()=>{
             if (data)
                 return resolve(JSON.parse(data));
-            reject("localStorage for "+list+" does not exist");
+            reject("storage for  "+list+" does not exist locally");
         },0);
     });
 }
@@ -37,7 +46,7 @@ export function promiseSaveItem(item, list){
             .then(
                 (data)=>{
                     data.unshift(item);
-                    window.localStorage.setItem(list, JSON.stringify(data));
+                    store.setItem(list, JSON.stringify(data));
                 })
            );
 }
@@ -47,7 +56,7 @@ export function promiseRemoveItem(item, list){
             .then(
                 (data)=>{
                     const newData = data.filter( (x)=>(!deepEqual(x,item,true)) );
-                    window.localStorage.setItem(list, JSON.stringify(newData));
+                    store.setItem(list, JSON.stringify(newData));
                 })
            );
 }                        

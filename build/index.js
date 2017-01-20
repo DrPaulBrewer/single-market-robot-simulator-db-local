@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.init = init;
 exports.openList = openList;
 exports.promiseUpload = promiseUpload;
 exports.promiseList = promiseList;
@@ -17,17 +18,28 @@ var _deepEqual2 = _interopRequireDefault(_deepEqual);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* Copyright 2017 Paul Brewer, Economic and Financial Technology Consulting LLC */
+/* This file is open source software.  The MIT License applies to this software. */
+
+/*
+ * store should be set to window.localStorage or window.sessionStorage with init(_)
+ *
+ */
+
+var store = null;
+
+function init(obj) {
+    store = obj;
+}
+
 function openList(name) {
     var defaultValue = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
 
-    if (defaultValue && !window.localStorage.getItem(name)) {
-        window.localStorage.setItem(name, JSON.stringify(defaultValue));
+    if (defaultValue && !store.getItem(name)) {
+        store.setItem(name, JSON.stringify(defaultValue));
     }
     return name;
-} /* Copyright 2017 Paul Brewer, Economic and Financial Technology Consulting LLC */
-/* This file is open source software.  The MIT License applies to this software. */
-
-/* global window:True */
+}
 
 function promiseUpload() {
     throw new Error("upload unavailable when using local storage");
@@ -35,11 +47,11 @@ function promiseUpload() {
 
 function promiseList(list) {
     return new Promise(function (resolve, reject) {
-        var S = window.localStorage;
+        var S = store;
         var data = S.getItem(list);
         setTimeout(function () {
             if (data) return resolve(JSON.parse(data));
-            reject("localStorage for " + list + " does not exist");
+            reject("storage for  " + list + " does not exist locally");
         }, 0);
     });
 }
@@ -53,7 +65,7 @@ function promiseListRange(list, iFrom, iTo) {
 function promiseSaveItem(item, list) {
     return promiseList(list).then(function (data) {
         data.unshift(item);
-        window.localStorage.setItem(list, JSON.stringify(data));
+        store.setItem(list, JSON.stringify(data));
     });
 }
 
@@ -62,7 +74,7 @@ function promiseRemoveItem(item, list) {
         var newData = data.filter(function (x) {
             return !(0, _deepEqual2.default)(x, item, true);
         });
-        window.localStorage.setItem(list, JSON.stringify(newData));
+        store.setItem(list, JSON.stringify(newData));
     });
 }
 
