@@ -1,6 +1,6 @@
 {
   "name": "single-market-robot-simulator-db-local",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "local storage adapter for use as DB with single-market-robot-simulator-app-framework",
   "main": "build/index.js",
   "jsnext:main": "src/index.js",
